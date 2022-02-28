@@ -112,11 +112,11 @@
       });
       
       function closeSocket(){
+        socket.emit('chat message', "User: "+ user.textContent +" disconnected");
         var item = document.createElement('li');
         item.textContent = "DISCONNECTED";
         messages.appendChild(item);
         window.scrollTo(0, document.body.scrollHeight);
-        socket.emit('chat message', "User: "+ user.textContent +" disconnected");
         users.removeChild(user);
         user.textContent = "";
         register = "";
