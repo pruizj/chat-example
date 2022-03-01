@@ -1,15 +1,21 @@
-# chat-example
+# Practice 1: Chat-example
 
-This is the source code for a very simple chat example used for
-the [Getting Started](http://socket.io/get-started/chat/) guide
-of the Socket.IO website.
+## Function 📋
 
-Please refer to it to learn how to run this application.
+This is the source code for a very simple chat example used for the Getting Started guide of the Socket.IO website.
 
-You can also spin up a free Heroku dyno to test it out:
+Y added the following functionalities:
+  
+  * Button to close the socket connection and not allow sending messages
+  * Registration of who is connected: Log in / Log out
+  * Add a user's nickname
+  
+## Execution 🚀
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/socketio/chat-example)
-
-Or run it on [Repl.it](https://repl.it/):
+I run it on [Repl.it](https://repl.it/):
 
 [![Run on Repl.it](https://repl.it/badge/github/socketio/chat-example)](https://repl.it/github/socketio/chat-example)
+
+## Author ✒️
+
+* **Paula Ruiz Jiménez** 
