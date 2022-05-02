@@ -19,17 +19,19 @@
 
       #form1 > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
 
-      #message { padding: 0.25rem; position:fixed; left: 30%; right: 0; display: flex; height: 31rem; box-sizing: border-box; backdrop-filter: blur(10px); background: #efefef; border-radius: 3px; padding: 0 1rem; margin: 1rem; backdrop-filter: blur(10px); }
+      #message { padding: 0.25rem; position:fixed; left: 30%; right: 0; display: flex; height: 31rem; box-sizing: border-box; background: #efefef; border-radius: 3px; padding: 0 1rem; margin: 1rem; backdrop-filter: blur(10px); flex-direction: column; justify-content: space-between;}
 
       #register { padding: 0.25rem; position:fixed; left: 0; right: 69%; display: flex; height: 31rem; box-sizing: border-box; backdrop-filter: blur(10px); background: #efefef; border-radius: 3px; padding: 0 1rem; margin: 1rem; backdrop-filter: blur(10px);}
 
       #messages { list-style-type: none; margin: 0; padding: 0;}
-      #messages > li { padding: 0.5rem 1rem; }
+      #messages > li {padding: 0.5rem 1rem;}
       #messages > li:nth-child(odd) { background: #efefef;}
-
+      
       #users { list-style-type: none; margin: 0; padding: 0;}
-      #users > li { padding: 1.2rem 1rem; }
+      #users > li {  padding: 1.2rem 1rem; }
       #users > li:nth-child(odd) { background: #efefef;}
+
+      #escribiendo {list-style-type: none; padding: 0.25rem; background: #efefef;}
 
     </style>
   </head>
@@ -41,10 +43,11 @@
 
     <form id = "message" action="">
       <ul id="messages"></ul>
+      <li id= "escribiendo"></li>
     </form>
-
+    
     <form id="form" action="">
-      <input id="input" autocomplete="off" />
+      <input id="input" autocomplete="off"></input>
       <button>Send</button>
       <button onclick = "closeSocket()" >Log out</button>
     </form>
@@ -56,7 +59,7 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      
+       
       var socket = io(); 
 
       var messages = document.getElementById('messages');
@@ -68,11 +71,36 @@
       var input = document.getElementById('input');
       var input1 = document.getElementById('input1');
 
+      var register = "";
       var user = document.getElementById('input');
       user.textContent = "";
 
-      var register = "";
+      var escribiendo = document.getElementById('escribiendo');
+      let timeout;
+
+      //Mostrar mensaje de escribiendo
+      input.addEventListener('keyup', () => {
+        clearTimeout(timeout)
+        if (input.value) {
+          if(user.textContent){
+            socket.emit('chat escribiendo', "true");
+          }
+        }
+        timeout = setTimeout(() => {
+          socket.emit('chat escribiendo', "false");
+          clearTimeout(timeout)
+        },1000)
+      })
+
+      socket.on('chat escribiendo', function(msg) {
+          if(msg === "true"){
+            escribiendo.textContent = "escribiendo...";
+          }else{
+            escribiendo.textContent = "";
+          }
+      });
       
+      //Enviar un mensaje
       form.addEventListener('submit', function(e) {
         e.preventDefault();
         if (input.value) {
@@ -92,6 +120,7 @@
           window.scrollTo(0, document.body.scrollHeight);
       });
 
+      //Log in
       form1.addEventListener('submit', function(e) {
         e.preventDefault();
           if(register === ""){
@@ -110,7 +139,8 @@
         users.appendChild(user);
         window.scrollTo(0, document.body.scrollHeight);
       });
-      
+
+      //Mostrar mensaje de desconectado
       function closeSocket(){
         socket.emit('chat message', "User: "+ user.textContent +" disconnected");
         var item = document.createElement('li');
@@ -122,7 +152,8 @@
         register = "";
         socket.close();
       };
-      
+
+      //Mostrar mensaje de conectado
       function connectedSocket(){
         if(socket.onopen){
           var item = document.createElement('li');

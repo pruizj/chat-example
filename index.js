@@ -14,7 +14,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('log in', usr => {
-    io.emit('log in', usr);
+    io.emit('log in', usr );
+  });
+
+  socket.on('chat escribiendo', msg => {
+    io.emit('chat escribiendo', msg);
   });
   
 });
