@@ -73,7 +73,7 @@
 
       var register = "";
       var user = document.getElementById('input');
-      user.textContent = "";
+      user.textContent = "";  
 
       var escribiendo = document.getElementById('escribiendo');
       let timeout;
@@ -136,6 +136,11 @@
         item = document.createElement('li');
         item.textContent = msg;
         user = item;
+        //añadir imagen
+        var img = new Image();
+        img.src = "./user.jpg";
+        user.appendChild(img);
+        
         users.appendChild(user);
         window.scrollTo(0, document.body.scrollHeight);
       });
@@ -149,6 +154,7 @@
         window.scrollTo(0, document.body.scrollHeight);
         users.removeChild(user);
         user.textContent = "";
+        user.removeChild(img);
         register = "";
         socket.close();
       };
