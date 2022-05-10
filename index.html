@@ -28,7 +28,7 @@
       #messages > li:nth-child(odd) { background: #efefef;}
       
       #users { list-style-type: none; margin: 0; padding: 0;}
-      #users > li {  padding: 1.2rem 1rem; }
+      #users > li {padding: 1.2rem 1rem; }
       #users > li:nth-child(odd) { background: #efefef;}
 
       #escribiendo {list-style-type: none; padding: 0.25rem; background: #efefef;}
@@ -131,15 +131,15 @@
             window.alert("Already log in");
           }
       });
-
+      
       socket.on('log in', function(msg){
         item = document.createElement('li');
         item.textContent = msg;
         user = item;
         //añadir imagen
-        var img = new Image();
-        img.src = "./user.jpg";
-        user.appendChild(img);
+        item1 = document.createElement('img');
+        item1.src = 'user.jpeg';
+        user.appendChild(item1);
         
         users.appendChild(user);
         window.scrollTo(0, document.body.scrollHeight);
